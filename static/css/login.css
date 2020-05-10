@@ -1,0 +1,7 @@
+body {
+    background-color: #ddd;
+}
+
+body > .ui.grid {
+    height: 100%;
+}

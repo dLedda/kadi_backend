@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo 'Migrating to server...'
+sudo rsync -4 -rltD -e "ssh -i /home/ledda/.ssh/id_rsa" ./dist/ kadi@djledda.xyz:/var/www/kadi/dist
+sudo rsync -4 -rltD -e "ssh -i /home/ledda/.ssh/id_rsa" ./static/ kadi@djledda.xyz:/var/www/kadi/dist/static
+sudo rsync -4 -rltD -e "ssh -i /home/ledda/.ssh/id_rsa" ./views/ kadi@djledda.xyz:/var/www/kadi/dist/views
+sudo scp -4 -i /home/ledda/.ssh/id_rsa ./package.json root@djledda.xyz:/var/www/kadi/
+echo 'Done.'
+echo 'Restarting Apache...'
+ssh -4 root@djledda.xyz 'apachectl restart;'
+echo 'Done.'

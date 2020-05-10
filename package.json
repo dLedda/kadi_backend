@@ -1,0 +1,41 @@
+{
+  "name": "kadi_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/index.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.9.11",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.6",
+    "@types/express-flash": "0.0.2",
+    "@types/express-session": "^1.17.0",
+    "@types/mongoose": "^5.7.14",
+    "@types/passport": "^1.0.3",
+    "@types/passport-local": "^1.0.33",
+    "semantic-ui": "^2.4.2",
+    "nodemon": "^2.0.3",
+    "concurrently": "^5.2.0",
+    "typescript": "^3.8.3",
+    "gulp": "^3.9.1",
+    "ts-loader": "^7.0.3",
+    "tslint": "^6.1.1"
+  }
+}

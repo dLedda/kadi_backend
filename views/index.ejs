@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="<%= rootUrl %>/static/semantic/dist/semantic.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f8f9;
+        }
+
+        #logoutrow {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="ui container">
+<div class="ui horizontally padded centered grid">
+    <div class="row">
+        <div class="fourteen wide mobile ten wide tablet six wide computer column">
+
+        <div class="ui huge header">
+            Welcome, <%= username %>.
+        </div>
+        <div class="ui stacked segment">
+            <div class="ui success message">
+                Login successful!
+            </div>
+            <a class="ui blue button" href="<%= rootUrl %>/stats/games">
+                View saved games
+            </a>
+        </div>
+        </div>
+    </div>
+    <div id="logoutrow" class="row">
+        <div class="center aligned fourteen wide mobile ten wide tablet six wide computer column">
+            <a class="ui basic button" href="<%= rootUrl %>/account/logout">Log out</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script src="<%= rootUrl %>/static/semantic/dist/semantic.min.js"></script>
+</body>
+</html>
