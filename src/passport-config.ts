@@ -45,7 +45,7 @@ export const initialisePassport = () => {
         done(null, user._id)
     });
     passport.deserializeUser(async (id: string, done) => {
-        const user: IDbUserDoc | null = await DbUser.findById(id);
+        const user: IDbUserDoc | null = await DbUser.findById(id, {username: 1, password: 1, lang: 1, email: 1});
         done(null, user);
     });
 };

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/kadi_backend.iml" filepath="$PROJECT_DIR$/.idea/kadi_backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../kadi_frontend/.idea/kniffel.iml" filepath="$PROJECT_DIR$/../kadi_frontend/.idea/kniffel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../kadi_frontend/.idea/kadi_frontendä.iml" filepath="$PROJECT_DIR$/../kadi_frontend/.idea/kadi_frontendä.iml" />
       <module fileurl="file://$PROJECT_DIR$/../kadi_game/.idea/kadi_game.iml" filepath="$PROJECT_DIR$/../kadi_game/.idea/kadi_game.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../.idea/www.iml" filepath="$PROJECT_DIR$/../../../.idea/www.iml" />
     </modules>

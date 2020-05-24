@@ -5,7 +5,6 @@ import Settings from "./server-config.json";
 import flash from "express-flash";
 import passport from "passport";
 import session from "express-session";
-import * as path from "path";
 import MainRouter from "./routers/mainRouter";
 
 // MongoDB Setup
@@ -23,6 +22,7 @@ const app = express();
 app.use(express.json());
 app.set("port", process.env.PORT || 3000);
 app.set("view-engine", "ejs");
+app.set("views", "views");
 app.use(express.urlencoded({ extended: false}));
 app.use(flash());
 app.use(session({
@@ -39,7 +39,11 @@ app.locals = {
 initialisePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use((req, res, next) => {
+    console.log(req.originalUrl);
+    next();
+});
+app.use(Settings.serverRoot + "/static", express.static("static"));
 app.use(Settings.serverRoot, MainRouter);
 
 const server = app.listen(app.get("port"), () => {

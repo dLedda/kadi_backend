@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import Player, {IPlayer, IPlayerDoc, PlayerSchema} from "./player";
 import {AccountStats, AccountStatsSchema, IAccountStats, IAccountStatsDoc} from "./stats";
-import {ISavedGame, ISavedGameDoc, SavedGameSchema} from "./savedGame";
+import SavedGame, {ISavedGame, ISavedGameDoc, SavedGameSchema} from "./savedGame";
 import bcrypt from "bcrypt";
+import {SupportedLang} from "../enums";
 
 export class CredentialsTakenError extends Error {
     public emailExists: boolean;
@@ -19,6 +20,7 @@ export interface IDbUser {
     username: string;
     email: string;
     password: string;
+    lang?: SupportedLang;
     friends?: IDbUser[];
     player?: IPlayer;
     guests?: IPlayer[];
@@ -30,11 +32,14 @@ export interface IDbUserDoc extends mongoose.Document {
     username: string;
     email: string;
     password: string;
+    lang: SupportedLang;
     friends: IDbUserDoc[];
     player: IPlayerDoc;
     guests: IPlayerDoc[];
     accountStats: IAccountStatsDoc;
     savedGames: ISavedGameDoc[];
+    changeLang(lang: SupportedLang): void;
+    addGame(game: any): Promise<string | null>;
 }
 
 export interface IDbUserModel extends mongoose.Model<IDbUserDoc> {
@@ -49,11 +54,12 @@ export const DbUserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    friends: {type: [mongoose.Schema.Types.ObjectId], required: true, default: []},
+    lang: { type: String, required: true },
+    friends: {type: [mongoose.Schema.Types.ObjectId], default: []},
     player: {type: PlayerSchema, required: true, unique: true},
-    guests: {type: [PlayerSchema], required: true, default: []},
-    accountStats: {type: AccountStatsSchema, required: true, default: () => ({}) },
-    savedGames: {type: [SavedGameSchema], required: true, default: []},
+    guests: {type: [PlayerSchema], default: []},
+    accountStats: {type: AccountStatsSchema, default: () => ({}) },
+    savedGames: {type: [SavedGameSchema], default: []},
 });
 
 DbUserSchema.statics.findByEmail = async function (emailQuery: string) {
@@ -63,11 +69,12 @@ DbUserSchema.statics.findByEmail = async function (emailQuery: string) {
 DbUserSchema.statics.addNewUser = async function (user: IDbUser) {
     const player = new Player( { nick: user.username });
     return this.create({
-            username: user.username,
-            email: user.email,
-            password: user.password,
-            player
-        });
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        lang: SupportedLang.gb,
+        player
+    });
 };
 
 DbUserSchema.statics.registerUser = async function (username: string, email: string, password: string) {
@@ -88,6 +95,20 @@ DbUserSchema.statics.userWithEmailExists = async function (email: string) {
 
 DbUserSchema.statics.userWithUsernameExists = async function (username: string) {
     return this.exists({username});
+};
+
+DbUserSchema.methods.addGame = function (game: any): void {
+    const newGame = new SavedGame();
+    newGame.game = game;
+    DbUser.updateOne(this, {$push: {savedGames: newGame}}, (err) => {
+        console.log(err);
+    });
+};
+
+DbUserSchema.methods.changeLang = function (lang: SupportedLang): void {
+    if (lang in SupportedLang) {
+        DbUser.updateOne(this, {lang: lang});
+    }
 };
 
 const DbUser = mongoose.model<IDbUserDoc, IDbUserModel>("DbUser", DbUserSchema);
