@@ -1,7 +1,7 @@
 import passport from "passport";
 import {Strategy as LocalStrategy, VerifyFunction} from "passport-local";
 import bcrypt from "bcrypt";
-import DbUser, {IDbUserDoc} from "./models/dbUser";
+import DbUser, {IDbUser} from "./models/dbUser";
 import {NextFunction, Request, Response} from "express";
 
 export const requireAuthenticated = (req: Request, res: Response, next: NextFunction) => {
@@ -41,11 +41,11 @@ const authenticateUser: VerifyFunction = async (email, password, done) => {
 
 export const initialisePassport = () => {
     passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser));
-    passport.serializeUser((user: IDbUserDoc, done) => {
-        done(null, user._id)
+    passport.serializeUser((user: IDbUser, done) => {
+        done(null, user.id)
     });
     passport.deserializeUser(async (id: string, done) => {
-        const user: IDbUserDoc | null = await DbUser.findById(id, {username: 1, password: 1, lang: 1, email: 1});
+        const user: IDbUser | null = await DbUser.getSerializedAuthUser(id);
         done(null, user);
     });
 };

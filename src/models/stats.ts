@@ -53,31 +53,16 @@ type IMultiplierFieldStats = INumberFieldStats;
 type IYahtzeeFieldStats = INumberFieldStats;
 
 // Mongoose doc interfaces and types
-export interface IPlayerStats extends IBaseStats {
-    one: IMultiplierFieldStatsDoc;
-    two: IMultiplierFieldStatsDoc;
-    three: IMultiplierFieldStatsDoc;
-    four: IMultiplierFieldStatsDoc;
-    five: IMultiplierFieldStatsDoc;
-    six: IMultiplierFieldStatsDoc;
-    upperBonus: IBonusFieldStatsDoc;
-    upperTotal: ITotalFieldStatsDoc;
-    threeKind: INumberFieldStatsDoc;
-    fourKind: INumberFieldStatsDoc;
-    fullHouse: IBoolFieldStatsDoc;
-    smlStraight: IBoolFieldStatsDoc;
-    lgStraight: IBoolFieldStatsDoc;
-    yahtzee: IYahtzeeFieldStatsDoc;
-    chance: INumberFieldStatsDoc;
-    grandTotal: ITotalFieldStatsDoc;
-    lowerTotal: ITotalFieldStatsDoc;
-    gamesPlayed: number;
+export interface IPlayerStatsDoc extends IBaseStatsDoc {
     wins: number;
     runnerUps: number;
     draws: number;
     losses: number;
 }
-export interface IAccountStats extends IBaseStats {
+export interface IAccountStatsDoc extends IBaseStatsDoc {
+    timesNoWinner: number;
+}
+interface IBaseStatsDoc extends mongoose.Document {
     one: IMultiplierFieldStatsDoc;
     two: IMultiplierFieldStatsDoc;
     three: IMultiplierFieldStatsDoc;
@@ -96,16 +81,14 @@ export interface IAccountStats extends IBaseStats {
     grandTotal: ITotalFieldStatsDoc;
     lowerTotal: ITotalFieldStatsDoc;
     gamesPlayed: number;
-    timesNoWinner: number;
 }
+
 type IBonusFieldStatsDoc = mongoose.Document & IBonusFieldStats;
 type ITotalFieldStatsDoc = mongoose.Document & ITotalFieldStats;
 type IBoolFieldStatsDoc = mongoose.Document & IBoolFieldStats;
 type INumberFieldStatsDoc = mongoose.Document & INumberFieldStats;
 type IMultiplierFieldStatsDoc = mongoose.Document & IMultiplierFieldStats;
 type IYahtzeeFieldStatsDoc = mongoose.Document & IYahtzeeFieldStats;
-export type IPlayerStatsDoc = mongoose.Document & IPlayerStats;
-export type IAccountStatsDoc = mongoose.Document & IAccountStats;
 
 // Mongoose schemata
 class Int extends mongoose.SchemaType {

@@ -39,10 +39,6 @@ app.locals = {
 initialisePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-app.use((req, res, next) => {
-    console.log(req.originalUrl);
-    next();
-});
 app.use(Settings.serverRoot + "/static", express.static("static"));
 app.use(Settings.serverRoot, MainRouter);
 
